@@ -212,18 +212,18 @@ def rps():
     """
     Purpose: Runs the whole program. Write this function LAST.
     """
-    print_initial_header()
-
+  print_initial_header()
+ 
     p1_name = get_name(PLAYER_1)
     p2_name = get_name(PLAYER_2)
-
-    choice = get_menu()
+ 
+    choice = get_menu_choice()
     while choice != QUIT_CHOICE:
         winner = do_game(p1_name, p2_name, choice)
         if choice == PLAY_RPS:
-            call_winner(winner)
-        choice = get_menu()
-
+            announce_winner(winner)
+        choice = get_menu_choice()
+ 
     print_closer()
     # TODO: implement
     pass
@@ -235,14 +235,13 @@ def rps():
 # ***********************************************************************
 
 def is_move_good(move):
-    """TO FILL IN: describe what this function does in one line."""
-    # TODO: implement
-
-    # NOTE: replace this return statement!!!
+    """Returns True if move is one of R, r, P, p, S, s; False otherwise."""
     return move in ("R", "r", "P", "p", "S", "s")
-
+ 
+ 
 def get_name(player_number):
-    name = input("Player " + str(player_number) + ", enter your name:")
+    """Prompts for a player's name; uses a default if the input is empty."""
+    name = input("Player " + str(player_number) + ", enter your name: ")
     if name == "":
         print_error_message(ERROR_NAME)
         if player_number == PLAYER_1:
@@ -250,79 +249,90 @@ def get_name(player_number):
         else:
             name = DEFAULT_NAME_2
     return name
-
-def get_moves(player_name)
-    move = input(player_name) + ", enter your move; ")
+ 
+ 
+def get_move(player_name):
+    """Prompts a player for a move; returns DEFAULT_MOVE if the move is illegal."""
+    move = input(player_name + ", enter your move: ")
     if not is_move_good(move):
         print_error_message(ERROR_MOVE)
         return DEFAULT_MOVE
     return move
-
-def get_menu():
+ 
+ 
+def get_menu_choice():
+    """Shows the menu until a valid choice (1, 2 or 3) is entered; returns it as an int."""
     while True:
         print_menu()
-        choice = input("Choice -->")
-        if choice in ("!", "2", "3"):
+        choice = input("Choice --> ")
+        if choice in ("1", "2", "3"):
             return int(choice)
-        print("Wrong menu choice")
-
+        print("Invalid menu choice")
+ 
+ 
 def is_round_winner(move, opponent_move):
+    """Returns True if move beats opponent_move in Rock, Paper, Scissors."""
     move = move.lower()
     opponent_move = opponent_move.lower()
     return ((move == ROCK and opponent_move == SCISSORS) or
             (move == PAPER and opponent_move == ROCK) or
-            (move == SCISSORS and opponent_move == PAPER)
-
+            (move == SCISSORS and opponent_move == PAPER))
+ 
+ 
 def round_winner(winner_name):
+    """Prints who won the round, or that it was a draw if winner_name is empty."""
     if winner_name == "":
         print("This round is a draw!")
     else:
-        print(winner_name + "wins round!")
-
+        print(winner_name + " wins the round!")
+ 
+ 
 def do_round(p1_name, p2_name):
+    """Plays one round; returns DRAW, PLAYER_1 or PLAYER_2."""
     p1_move = get_move(p1_name)
     p2_move = get_move(p2_name)
-
+ 
     if is_round_winner(p1_move, p2_move):
         return PLAYER_1
-     if is_round_winner(p2_move, p1_move):
+    if is_round_winner(p2_move, p1_move):
         return PLAYER_2
     return DRAW
-
-def call_winner(winner_name):
+ 
+ 
+def announce_winner(winner_name):
+    """Prints the overall game result, or that there was no winner."""
     if winner_name == "":
         print("No winner!")
     else:
-        print("Congrats" + winner_name + "!")
+        print("Congratulations " + winner_name + "!")
         print("You won " + COURSE_NAME + " Rock, Paper, Scissors!")
-
+ 
+ 
 def do_game(p1_name, p2_name, game_type):
+    """Plays a full game; returns the winner's name, or "" for no winner."""
     if game_type == PLAY_RPSLS:
         print("Under Construction")
         return ""
-
+ 
     p1_wins = 0
-    p1_wins = 0
-
+    p2_wins = 0
+ 
     for _ in range(MAX_ROUNDS):
         result = do_round(p1_name, p2_name)
-        if result == PLAYER_!:
+        if result == PLAYER_1:
             p1_wins += 1
-            round_winner(p1_name)
-        elif result == PLAYER_!:
+            announce_round_winner(p1_name)
+        elif result == PLAYER_2:
             p2_wins += 1
-            round_winner(p2_name)
+            announce_round_winner(p2_name)
         else:
-            round_winner("")
-
+            announce_round_winner("")
+ 
     if p1_wins > p2_wins:
         return p1_name
-     if p2_wins > p1_wins:
-        return p1_name
+    if p2_wins > p1_wins:
+        return p2_name
     return ""
-        
-
-    
 
 
 # ***********************************************************************
