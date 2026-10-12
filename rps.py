@@ -4,12 +4,13 @@ rps.py
 Redistributed and modified with permission from the
 EECS Department at The University of Michigan, Ann Arbor
 
-Name: TO FILL IN (your name)
+Name: Omarai Williams
 
 CS 104: Project 2
 FALL 2026
 
-Description: TO FILL IN (one or two sentences about what this program does)
+Description: A rock, paper, and scissors game. Players enter their names, pick a game from a menu,
+and play 3 rounds to see who wins.
 """
 
 # ***********************************************************************
@@ -211,6 +212,19 @@ def rps():
     """
     Purpose: Runs the whole program. Write this function LAST.
     """
+    print_initial_header()
+
+    p1_name = get_name(PLAYER_1)
+    p2_name = get_name(PLAYER_2)
+
+    choice = get_menu()
+    while choice != QUIT_CHOICE:
+        winner = do_game(p1_name, p2_name, choice)
+        if choice == PLAY_RPS:
+            call_winner(winner)
+        choice = get_menu()
+
+    print_closer()
     # TODO: implement
     pass
 
@@ -225,7 +239,90 @@ def is_move_good(move):
     # TODO: implement
 
     # NOTE: replace this return statement!!!
-    return True
+    return move in ("R", "r", "P", "p", "S", "s")
+
+def get_name(player_number):
+    name = input("Player " + str(player_number) + ", enter your name:")
+    if name == "":
+        print_error_message(ERROR_NAME)
+        if player_number == PLAYER_1:
+            name = DEFAULT_NAME_1
+        else:
+            name = DEFAULT_NAME_2
+    return name
+
+def get_moves(player_name)
+    move = input(player_name) + ", enter your move; ")
+    if not is_move_good(move):
+        print_error_message(ERROR_MOVE)
+        return DEFAULT_MOVE
+    return move
+
+def get_menu():
+    while True:
+        print_menu()
+        choice = input("Choice -->")
+        if choice in ("!", "2", "3"):
+            return int(choice)
+        print("Wrong menu choice")
+
+def is_round_winner(move, opponent_move):
+    move = move.lower()
+    opponent_move = opponent_move.lower()
+    return ((move == ROCK and opponent_move == SCISSORS) or
+            (move == PAPER and opponent_move == ROCK) or
+            (move == SCISSORS and opponent_move == PAPER)
+
+def round_winner(winner_name):
+    if winner_name == "":
+        print("This round is a draw!")
+    else:
+        print(winner_name + "wins round!")
+
+def do_round(p1_name, p2_name):
+    p1_move = get_move(p1_name)
+    p2_move = get_move(p2_name)
+
+    if is_round_winner(p1_move, p2_move):
+        return PLAYER_1
+     if is_round_winner(p2_move, p1_move):
+        return PLAYER_2
+    return DRAW
+
+def call_winner(winner_name):
+    if winner_name == "":
+        print("No winner!")
+    else:
+        print("Congrats" + winner_name + "!")
+        print("You won " + COURSE_NAME + " Rock, Paper, Scissors!")
+
+def do_game(p1_name, p2_name, game_type):
+    if game_type == PLAY_RPSLS:
+        print("Under Construction")
+        return ""
+
+    p1_wins = 0
+    p1_wins = 0
+
+    for _ in range(MAX_ROUNDS):
+        result = do_round(p1_name, p2_name)
+        if result == PLAYER_!:
+            p1_wins += 1
+            round_winner(p1_name)
+        elif result == PLAYER_!:
+            p2_wins += 1
+            round_winner(p2_name)
+        else:
+            round_winner("")
+
+    if p1_wins > p2_wins:
+        return p1_name
+     if p2_wins > p1_wins:
+        return p1_name
+    return ""
+        
+
+    
 
 
 # ***********************************************************************
